@@ -27,19 +27,19 @@ async function createUser({ username, password }) {
 
 async function getUser({ username, password }) {
   try {
-    console.log('get user ....');
     const {
       rows: [user],
     } = await client.query(
       `
-    SELECT *
+    SELECT id, username
     FROM users
     WHERE username=$1 AND password=$2;
   `,
       [username, password]
     );
-
-    return user;
+    if (user) {
+      return user;
+    }
   } catch (error) {
     console.log('getUser completed ...');
     throw error;
@@ -56,7 +56,7 @@ async function getUserById(userId) {
     FROM users
     WHERE username=$1;
   `,
-      [username]
+      [userId]
     );
 
     return user;
