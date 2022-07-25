@@ -1,13 +1,13 @@
-const e = require("cors");
-const client = require("./client");
+/* eslint-disable no-useless-catch */
+const e = require('cors');
+const client = require('./client');
 
 // database functions
 
 // user functions
 async function createUser({ username, password }) {
-  // eslint-disable-next-line no-useless-catch
   try {
-    console.log("creating user...");
+    console.log('creating user...');
     const {
       rows: [user],
     } = await client.query(
@@ -25,11 +25,64 @@ async function createUser({ username, password }) {
   }
 }
 
-async function getUser({ username, password }) {}
+async function getUser({ username, password }) {
+  try {
+    console.log('get user ....');
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT *
+    FROM users
+    WHERE username=$1 AND password=$2;
+  `,
+      [username, password]
+    );
 
-async function getUserById(userId) {}
+    return user;
+  } catch (error) {
+    console.log('getUser completed ...');
+    throw error;
+  }
+}
 
-async function getUserByUsername(userName) {}
+async function getUserById(userId) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT *
+    FROM users
+    WHERE username=$1;
+  `,
+      [username]
+    );
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getUserByUsername(username) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT *
+    FROM users
+    WHERE username=$1;
+  `,
+      [username]
+    );
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   createUser,
