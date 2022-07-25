@@ -1,5 +1,4 @@
-/* eslint-disable no-useless-catch */
-const e = require('cors');
+//const e = require('cors');
 const client = require('./client');
 
 // database functions
@@ -7,7 +6,7 @@ const client = require('./client');
 // user functions
 async function createUser({ username, password }) {
   try {
-    console.log('creating user...');
+    console.log('Starting to create user ...');
     const {
       rows: [user],
     } = await client.query(
@@ -21,12 +20,14 @@ async function createUser({ username, password }) {
     );
     return user;
   } catch (error) {
+    console.error('Error creating user!!');
     throw error;
   }
 }
 
 async function getUser({ username, password }) {
   try {
+    console.log('Starting to get user ...');
     const {
       rows: [user],
     } = await client.query(
@@ -40,8 +41,9 @@ async function getUser({ username, password }) {
     if (user) {
       return user;
     }
+    console.log('Finished getting user ...');
   } catch (error) {
-    console.log('getUser completed ...');
+    console.error('Error getting user!!');
     throw error;
   }
 }
