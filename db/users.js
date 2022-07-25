@@ -1,9 +1,11 @@
+const e = require("cors");
 const client = require("./client");
 
 // database functions
 
 // user functions
 async function createUser({ username, password }) {
+  // eslint-disable-next-line no-useless-catch
   try {
     console.log("creating user...");
     const {
@@ -13,13 +15,13 @@ async function createUser({ username, password }) {
         INSERT INTO users(username, password) 
         VALUES($1, $2) 
         ON CONFLICT (username) DO NOTHING 
-        RETURNING *;
+        RETURNING username, id;
       `,
       [username, password]
     );
     return user;
   } catch (error) {
-    console.log("error creating user");
+    throw error;
   }
 }
 

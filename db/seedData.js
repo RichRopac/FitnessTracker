@@ -3,7 +3,7 @@
 const client = require("./client");
 const { createUser } = require("./users");
 const { getRoutinesWithoutActivities, createRoutine } = require("./routines");
-const { getAllActivities, createActivity } = require("./activity");
+const { getAllActivities, createActivity } = require("./activities");
 const { addActivityToRoutine } = require("./routine_activities");
 
 async function dropTables() {
@@ -11,10 +11,10 @@ async function dropTables() {
   try {
     console.log("Starting to drop tables...");
     await client.query(`
-      DROP TABLE IF EXISTS users;
-      DROP TABLE IF EXISTS activites;
-      DROP TABLE IF EXISTS routines;
-      DROP TABLE IF EXISTS routine_activities;
+    DROP TABLE IF EXISTS routine_activities;
+    DROP TABLE IF EXISTS activities;
+    DROP TABLE IF EXISTS routines;
+    DROP TABLE IF EXISTS users;
       
     `);
     console.log("Finishing Dropping Tables!");
@@ -35,7 +35,7 @@ async function createTables() {
         username varchar(255) UNIQUE NOT NULL,
         password varchar(255) NOT NULL
       );
-      CREATE TABLE activites (
+      CREATE TABLE activities (
         id SERIAL PRIMARY KEY,
         name varchar(255) UNIQUE NOT NULL,
         description varchar(255) NOT NULL
