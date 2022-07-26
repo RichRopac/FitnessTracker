@@ -29,7 +29,7 @@ async function dropTables() {
 
 async function createTables() {
   try {
-    console.log('Starting to Create Tables...');
+    console.log('Starting to build tables...');
     await client.query(`
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -62,10 +62,9 @@ async function createTables() {
         count INTEGER,
         UNIQUE ("routineId", "activityId")
         );`);
-    console.log('Finished Creating Tables!');
+    console.log('Finished building tables!');
   } catch (error) {
-    console.error('Error Creating Tables!');
-
+    console.error('Error building tables!');
     throw error;
   }
 }

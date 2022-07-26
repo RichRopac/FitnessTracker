@@ -1,4 +1,3 @@
-//const e = require('cors');
 const client = require('./client');
 
 // database functions
@@ -6,7 +5,6 @@ const client = require('./client');
 // user functions
 async function createUser({ username, password }) {
   try {
-    console.log('Starting to create user ...');
     const {
       rows: [user],
     } = await client.query(
@@ -14,20 +12,19 @@ async function createUser({ username, password }) {
         INSERT INTO users(username, password) 
         VALUES($1, $2) 
         ON CONFLICT (username) DO NOTHING 
-        RETURNING username, id;
+        RETURNING id, username;
       `,
       [username, password]
     );
     return user;
   } catch (error) {
-    console.error('Error creating user!!');
+    console.error('Error creating user!');
     throw error;
   }
 }
 
 async function getUser({ username, password }) {
   try {
-    console.log('Starting to get user ...');
     const {
       rows: [user],
     } = await client.query(
@@ -38,12 +35,10 @@ async function getUser({ username, password }) {
   `,
       [username, password]
     );
-    if (user) {
-      return user;
-    }
-    console.log('Finished getting user ...');
+
+    return user;
   } catch (error) {
-    console.error('Error getting user!!');
+    console.error('Error getting user!');
     throw error;
   }
 }
@@ -54,15 +49,14 @@ async function getUserById(userId) {
       rows: [user],
     } = await client.query(
       `
-    SELECT id
+    SELECT id, username
     FROM users
-    WHERE id=$1
-  `,
-      [userId]
+    WHERE id=${userId};
+  `
     );
-
     return user;
   } catch (error) {
+    console.error('Error getting user by id!');
     throw error;
   }
 }
@@ -82,6 +76,7 @@ async function getUserByUsername(username) {
 
     return user;
   } catch (error) {
+    console.error('Error getting userByUsername!');
     throw error;
   }
 }
