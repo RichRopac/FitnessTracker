@@ -45,7 +45,7 @@ describe("DB Routine Activities", () => {
   });
 
   describe("addActivityToRoutine({ routineId, activityId, count, duration })", () => {
-    xit("creates a new routine_activity, and return it", async () => {
+    it("creates a new routine_activity, and return it", async () => {
       const routineActivity = await addActivityToRoutine(routineActivityData);
 
       expect(routineActivity.routineId).toBe(routineActivityData.routineId);
@@ -118,7 +118,7 @@ describe("DB Routine Activities", () => {
       );
       expect(deletedRoutine.id).toBe(fakeRoutineActivity.id);
       const { rows } = await client.query(`
-          SELECT * FROM routine_activities
+          SELECT * FROM routine_Activities
           WHERE id = ${deletedRoutine.id}
         `);
       expect(rows.length).toBe(0);
