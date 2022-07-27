@@ -1,4 +1,4 @@
-const client = require('./client');
+const client = require("./client");
 
 // database functions
 async function createActivity({ name, description }) {
@@ -32,7 +32,7 @@ async function getAllActivities() {
 
     return rows;
   } catch (error) {
-    console.error('Error getting all activites!');
+    console.error("Error getting all activites!");
     throw error;
   }
 }
@@ -49,7 +49,7 @@ async function getActivityById(id) {
     );
     return activity;
   } catch (error) {
-    console.error('Error getting ActivityById!');
+    console.error("Error getting ActivityById!");
     throw error;
   }
 }
@@ -68,19 +68,19 @@ async function getActivityByName(name) {
     );
     return activity;
   } catch (error) {
-    console.error('Error getting activityByName!');
+    console.error("Error getting activityByName!");
   }
 }
 
 async function attachActivitiesToRoutines(routines) {
   // no side effects
   const routinesToReturn = [...routines];
-  const binds = routines.map((_, index) => `$${index + 1}`).join(', ');
+  const binds = routines.map((_, index) => `$${index + 1}`).join(", ");
   const routineIds = routines.map((routine) => routine.id);
   if (!routineIds?.length) return [];
 
   try {
-    console.log('Starting to attach activities to Routines...');
+    //console.log('Starting to attach activities to Routines...');
     // get the activities, JOIN with routine_activities (so we can get a routineId), and only those that have those routine ids on the routine_activities join
     const { rows: activities } = await client.query(
       `
@@ -101,10 +101,10 @@ async function attachActivitiesToRoutines(routines) {
       // attach the activities to each single routine
       routine.activities = activitiesToAdd;
     }
-    console.log('Finished attaching activities to Routines!');
+    //console.log('Finished attaching activities to Routines!');
     return routinesToReturn;
   } catch (error) {
-    console.error('Error attaching activities to routines!');
+    console.error("Error attaching activities to routines!");
     throw error;
   }
 }
@@ -117,7 +117,7 @@ async function updateActivity({ id, ...fields }) {
   // build the set string
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(', ');
+    .join(", ");
 
   // return early if this is called without fields
   if (setString.length === 0) {
@@ -139,7 +139,7 @@ async function updateActivity({ id, ...fields }) {
 
     return activity;
   } catch (error) {
-    console.error('Error updatingActivity!');
+    console.error("Error updatingActivity!");
     throw error;
   }
 }

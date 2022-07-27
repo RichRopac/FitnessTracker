@@ -145,9 +145,50 @@ async function getPublicRoutinesByActivity({ id }) {
   }
 }
 
-async function updateRoutine({ id, ...fields }) {}
+async function updateRoutine({ id, ...fields }) {
+  // don't try to update the id
+  // do update the name and description
+  // return the updated activity
 
-async function destroyRoutine(id) {}
+  // build the set string
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+  // return early if this is called without fields
+  if (setString.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [routine],
+    } = await client.query(
+      `
+     UPDATE routines
+     SET ${setString}
+     WHERE id=${id}
+     RETURNING *;
+   `,
+      Object.values(fields)
+    );
+
+    return routine;
+  } catch (error) {
+    console.error("Error updating Routine!");
+    throw error;
+  }
+}
+
+async function destroyRoutine(id) {
+  await client.query(
+    `
+      DELETE FROM routine
+      WHERE id=${id};
+    `
+  );
+  // return routine;
+}
 
 module.exports = {
   getRoutineById,

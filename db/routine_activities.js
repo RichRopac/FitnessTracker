@@ -1,4 +1,4 @@
-const client = require('./client');
+const client = require("./client");
 
 async function addActivityToRoutine({
   routineId,
@@ -23,10 +23,10 @@ async function addActivityToRoutine({
       [routineId, activityId, duration, count]
     );
 
-    console.log('THIS IS THE ROUTINE TO RETURN: ', routine);
+    //console.log('THIS IS THE ROUTINE TO RETURN: ', routine);
     return routine;
   } catch (error) {
-    console.error('Error adding an activity to routine!');
+    console.error("Error adding an activity to routine!");
     throw error;
   }
 }
