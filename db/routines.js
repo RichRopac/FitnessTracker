@@ -65,7 +65,7 @@ async function getAllRoutines() {
        ;
     `);
 
-    return rows;
+    return attachActivitiesToRoutines(rows);
   } catch (error) {
     console.error('Error getting all activites!');
     throw error;
