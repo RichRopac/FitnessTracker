@@ -1,17 +1,20 @@
 const client = require('./client');
+const { attachActivitiesToRoutines } = require('./activities');
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
   try {
-    const { rows } = await client.query(
+    const {
+      rows: [routine],
+    } = await client.query(
       `
         INSERT INTO routines("creatorId", "isPublic", name, goal) 
         VALUES($1, $2, $3, $4) 
-        ON CONFLICT ("creatorId", "isPublic") DO NOTHING 
+        ON CONFLICT (name) DO NOTHING 
         RETURNING *;
       `,
       [creatorId, isPublic, name, goal]
     );
-    return rows;
+    return routine;
   } catch (error) {
     console.error('Error creating routine!');
     throw error;
