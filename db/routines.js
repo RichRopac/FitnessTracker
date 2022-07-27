@@ -11,7 +11,6 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
       `,
       [creatorId, isPublic, name, goal]
     );
-    console.log('THIS IS THE CREATE ROUTINE: ', rows);
     return rows;
   } catch (error) {
     console.error('Error creating routine!');
@@ -36,17 +35,34 @@ async function getRoutineById(id) {
   }
 }
 
-async function getRoutinesWithoutActivities() {}
-
-
-
-
-async function getAllRoutines() {
-  // select and return an array of all activities
+async function getRoutinesWithoutActivities() {
+  // select and return an array of all routines
   try {
     const { rows } = await client.query(`
-      SELECT *
-      FROM ;
+      SELECT 
+      FROM 
+      WHERE NOT EXISTS
+        SELECT
+        FROM
+        WHERE
+      )
+       ;
+    `);
+    return rows;
+  } catch (error) {
+    console.error('Error getting all routinesWithoutActivities!');
+    throw error;
+  }
+}
+
+async function getAllRoutines() {
+  // select and return an array of all routines
+  try {
+    const { rows } = await client.query(`
+      SELECT * 
+      FROM routines
+      JOIN
+       ;
     `);
 
     return rows;
@@ -54,7 +70,6 @@ async function getAllRoutines() {
     console.error('Error getting all activites!');
     throw error;
   }
-}
 }
 
 async function getAllPublicRoutines() {}

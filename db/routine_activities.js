@@ -3,8 +3,8 @@ const client = require('./client');
 async function addActivityToRoutine({
   routineId,
   activityId,
-  count,
   duration,
+  count,
 }) {
   try {
     const {
@@ -13,14 +13,14 @@ async function addActivityToRoutine({
       `
         INSERT INTO routine_activities("routineId",
           "activityId",
-          count,
-          duration
+          duration,
+          count
           ) 
         VALUES($1, $2, $3, $4) 
         ON CONFLICT ("activityId", "routineId") DO NOTHING
         RETURNING *;
       `,
-      [routineId, activityId, count, duration]
+      [routineId, activityId, duration, count]
     );
 
     console.log('THIS IS THE ROUTINE TO RETURN: ', routine);
