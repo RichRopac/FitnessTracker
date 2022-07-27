@@ -42,15 +42,12 @@ async function getRoutinesWithoutActivities() {
   // select and return an array of all routines
   try {
     const { rows } = await client.query(`
-      SELECT 
-      FROM 
-      WHERE NOT EXISTS
-        SELECT
-        FROM
-        WHERE
+      SELECT *
+      FROM routines
       )
        ;
     `);
+    console.log(rows);
     return rows;
   } catch (error) {
     console.error('Error getting all routinesWithoutActivities!');
@@ -62,9 +59,9 @@ async function getAllRoutines() {
   // select and return an array of all routines
   try {
     const { rows } = await client.query(`
-      SELECT * 
+      SELECT routines.*, users.username AS "creatorName" 
       FROM routines
-      JOIN
+      JOIN users ON routines."creatorId" = users.id
        ;
     `);
 
