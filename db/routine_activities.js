@@ -112,7 +112,29 @@ async function destroyRoutineActivity(id) {
   return routine;
 }
 
-async function canEditRoutineActivity(routineActivityId, userId) {}
+//and clause, check routine act id, compare to rout act.id, send in to position, return true/false
+//conditional statement w userid, return user id ......
+
+async function canEditRoutineActivity(routineActivityId, userId) {
+  try {
+    const { rows } = await client.query(
+      `
+    SELECT routine_activities.*
+    FROM routine_activities,
+    JOIN routines ON routines.id=routine_activities."routineId"
+    WHERE "creatorId"=$1
+    `,
+      [userId]
+    );
+    if (rows.length === 0) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Error getting editRoutineActivity!');
+    throw error;
+  }
+}
 
 module.exports = {
   getRoutineActivityById,
