@@ -1,8 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
+router.use((req, res, next) => {
+    res.header('Access-Control-Allow-Methods', '*');
+    next();
+  });
+
 // GET /api/health
-router.get("/health", async (req, res, next) => {});
+router.get("/health", async (req, res) => {
+    const data = {
+        message: "I am healthy"
+    }
+    res.status(200).send(data)
+});
 
 // ROUTER: /api/users
 const usersRouter = require("./users");
