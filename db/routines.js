@@ -67,7 +67,7 @@ async function getAllRoutines() {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activites!');
+    console.error('Error getting all activities!');
     throw error;
   }
 }
@@ -84,7 +84,7 @@ async function getAllPublicRoutines() {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activites!');
+    console.error('Error getting all activities!');
     throw error;
   }
 }
@@ -103,7 +103,7 @@ async function getAllRoutinesByUser({ username }) {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activites!');
+    console.error('Error getting all activities!');
     throw error;
   }
 }
@@ -121,7 +121,7 @@ async function getPublicRoutinesByUser({ username }) {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activites!');
+    console.error('Error getting all activities!');
     throw error;
   }
 }
@@ -140,7 +140,7 @@ async function getPublicRoutinesByActivity({ id }) {
     );
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activites!');
+    console.error('Error getting all activities!');
     throw error;
   }
 }

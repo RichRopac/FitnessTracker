@@ -1,5 +1,5 @@
 const client = require('./client');
-const { getRoutinesWithoutActivities } = require('./routines');
+// const { getRoutinesWithoutActivities } = require('./routines');
 
 async function addActivityToRoutine({
   routineId,
@@ -114,7 +114,7 @@ async function destroyRoutineActivity(id) {
 }
 
 //and clause, check routine act id, compare to rout act.id, send in to position, return true/false
-//conditional statement w userid, return user id ......
+//conditional statement w userId, return user id ......
 
 async function canEditRoutineActivity(routineActivityId, userId) {
   try {
@@ -137,8 +137,6 @@ async function canEditRoutineActivity(routineActivityId, userId) {
       return false;
     }
     
-    
-  
   } catch (error) {
     console.error('Error getting routineById!');
     throw error;
