@@ -3,16 +3,30 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const app = express();
-const apiRouter = require('./api');
+const router = require('./api');
 const client = require('./db/client');
 
 // Setup your Middleware and API Router here
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
-app.use('/api', apiRouter);
+app.use('/api', router);
 client.connect();
 
 // error handling goes here
+router.use((req, next) => {
+  if (req.user) {
+    console.log('User is set:', req.user);
+  }
+
+  next();
+});
+
+router.use((error, res) => {
+  res.send({
+    name: error.name,
+    message: error.message,
+  });
+});
 
 module.exports = app;
