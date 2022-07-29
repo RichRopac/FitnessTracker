@@ -7,26 +7,21 @@ const { getAllActivities, createActivity } = require('./activities');
 const { addActivityToRoutine } = require('./routine_activities');
 
 async function dropTables() {
-  // AT swapped order of routines and activities
   try {
-    console.log('Starting to drop all tables...');
     await client.query(`
     DROP TABLE IF EXISTS routine_activities;
     DROP TABLE IF EXISTS routines;
     DROP TABLE IF EXISTS activities;
     DROP TABLE IF EXISTS users;
-      
     `);
-    console.log('Finishing Dropping Tables!');
   } catch (error) {
-    console.log('There is an Error Dropping Tables');
+    console.log('Error dropping tables!');
     throw error;
   }
 }
 
 async function createTables() {
   try {
-    console.log('Starting to build tables...');
     await client.query(`
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -56,7 +51,6 @@ async function createTables() {
         count INTEGER,
         UNIQUE ("routineId", "activityId")
         );`);
-    console.log('Finished building tables!');
   } catch (error) {
     console.error('Error building tables!');
     throw error;

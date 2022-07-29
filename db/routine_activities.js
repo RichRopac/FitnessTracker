@@ -27,7 +27,7 @@ async function addActivityToRoutine({
     //console.log('THIS IS THE ROUTINE TO RETURN: ', routine);
     return routine;
   } catch (error) {
-    console.error('Error adding an activity to routine!');
+    console.error('Error adding activity to routine!');
     throw error;
   }
 }
@@ -44,7 +44,7 @@ async function getRoutineActivityById(id) {
     );
     return routine;
   } catch (error) {
-    console.error('Error getting routineById!');
+    console.error('Error getting routine activity by id!');
     throw error;
   }
 }
@@ -59,7 +59,7 @@ async function getRoutineActivitiesByRoutine({ id }) {
     );
     return rows;
   } catch (error) {
-    console.error('Error getting routineById!');
+    console.error('Error getting routine activities by routine!');
     throw error;
   }
 }
@@ -94,23 +94,27 @@ async function updateRoutineActivity({ id, ...fields }) {
 
     return routine;
   } catch (error) {
-    console.error('Error updating Routine!');
+    console.error('Error updating routine activity!');
     throw error;
   }
 }
 
 async function destroyRoutineActivity(id) {
-  const {
-    rows: [routine],
-  } = await client.query(
-    `
+  try {
+    const {
+      rows: [routine],
+    } = await client.query(
+      `
   DELETE FROM routine_activities
   WHERE id=$1
   RETURNING id;
   `,
-    [id]
-  );
-  return routine;
+      [id]
+    );
+    return routine;
+  } catch (error) {
+    console.error('Error destroying routine activity!');
+  }
 }
 
 //and clause, check routine act id, compare to rout act.id, send in to position, return true/false
@@ -126,23 +130,21 @@ async function canEditRoutineActivity(routineActivityId, userId) {
       FROM routines
       JOIN routine_activities ON routines.id = routine_activities."routineId"
       WHERE routine_activities.id = ${routineActivityId};
-      `,  
-    ); 
+      `
+    );
     console.log('THIS IS ROUTINE', routine);
     console.log('THIS IS USER ID', userId);
     console.log('THIS IS CREATOR ID', routine.creatorId);
-    if (routine.creatorId === userId){
+    if (routine.creatorId === userId) {
       return true;
-    }else {
+    } else {
       return false;
     }
-    
   } catch (error) {
-    console.error('Error getting routineById!');
+    console.error('Error editing routine activity!');
     throw error;
   }
 }
-
 
 module.exports = {
   getRoutineActivityById,
