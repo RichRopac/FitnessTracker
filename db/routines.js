@@ -33,7 +33,7 @@ async function getRoutineById(id) {
     );
     return routine;
   } catch (error) {
-    console.error('Error getting routineById!');
+    console.error('Error getting routine by id!');
     throw error;
   }
 }
@@ -47,10 +47,9 @@ async function getRoutinesWithoutActivities() {
       )
        ;
     `);
-    console.log(rows);
     return rows;
   } catch (error) {
-    console.error('Error getting all routinesWithoutActivities!');
+    console.error('Error getting routines without activities!');
     throw error;
   }
 }
@@ -67,7 +66,7 @@ async function getAllRoutines() {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activities!');
+    console.error('Error getting all routines!');
     throw error;
   }
 }
@@ -84,7 +83,7 @@ async function getAllPublicRoutines() {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activities!');
+    console.error('Error getting all public routines!');
     throw error;
   }
 }
@@ -103,7 +102,7 @@ async function getAllRoutinesByUser({ username }) {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activities!');
+    console.error('Error getting all routines by user!');
     throw error;
   }
 }
@@ -121,7 +120,7 @@ async function getPublicRoutinesByUser({ username }) {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activities!');
+    console.error('Error getting public routines by user!');
     throw error;
   }
 }
@@ -140,7 +139,7 @@ async function getPublicRoutinesByActivity({ id }) {
     );
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all activities!');
+    console.error('Error getting public routines by activity!');
     throw error;
   }
 }
@@ -175,7 +174,7 @@ async function updateRoutine({ id, ...fields }) {
 
     return routine;
   } catch (error) {
-    console.error('Error updating Routine!');
+    console.error('Error updating routine!');
     throw error;
   }
 }

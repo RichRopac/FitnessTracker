@@ -1,5 +1,5 @@
-const client = require("./client");
-const bcrypt = require("bcrypt");
+const client = require('./client');
+const bcrypt = require('bcrypt');
 
 // database functions
 
@@ -22,7 +22,7 @@ async function createUser({ username, password }) {
     );
     return user;
   } catch (error) {
-    console.error("Error creating user!");
+    console.error('Error creating user!');
     throw error;
   }
 }
@@ -33,11 +33,10 @@ async function getUser({ username, password }) {
   const passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
   if (passwordsMatch) {
-    console.log("THIS IS USER:::::: ", tempUser);
     let user = { id: tempUser.id, username: tempUser.username };
     return user;
   } else {
-    console.log("Error getting user!");
+    console.log('Error getting user!');
   }
 }
 
@@ -54,7 +53,7 @@ async function getUserById(userId) {
     );
     return user;
   } catch (error) {
-    console.error("Error getting user by id!");
+    console.error('Error getting user by id!');
     throw error;
   }
 }
@@ -74,7 +73,7 @@ async function getUserByUsername(username) {
 
     return user;
   } catch (error) {
-    console.error("Error getting userByUsername!");
+    console.error('Error getting user by username!');
     throw error;
   }
 }

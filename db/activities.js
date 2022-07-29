@@ -3,7 +3,6 @@ const client = require('./client');
 // database functions
 async function createActivity({ name, description }) {
   try {
-    console.log('Starting to create activity...');
     const {
       rows: [activity],
     } = await client.query(
@@ -18,7 +17,7 @@ async function createActivity({ name, description }) {
 
     return activity;
   } catch (error) {
-    console.error(error);
+    console.error('Error creating activity!');
   }
 }
 
@@ -49,7 +48,7 @@ async function getActivityById(id) {
     );
     return activity;
   } catch (error) {
-    console.error('Error getting ActivityById!');
+    console.error('Error getting activity by id!');
     throw error;
   }
 }
@@ -68,7 +67,8 @@ async function getActivityByName(name) {
     );
     return activity;
   } catch (error) {
-    console.error('Error getting activityByName!');
+    console.error('Error getting activity by name!');
+    throw error;
   }
 }
 
@@ -139,7 +139,7 @@ async function updateActivity({ id, ...fields }) {
 
     return activity;
   } catch (error) {
-    console.error('Error updatingActivity!');
+    console.error('Error updating acitivity!');
     throw error;
   }
 }
