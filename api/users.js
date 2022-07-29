@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 const express = require("express");
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const { createUser, getUser, getUserByUsername } = require("../db");
 const jwt = require("jsonwebtoken");
 // const { requireUser } = require('./utils');
@@ -56,22 +57,29 @@ router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   // request must have both
   if (!username || !password) {
-    next({
+    res.send({
       name: "MissingCredentialsError",
       message: "Please supply both a username and password",
     });
   }
   try {
-    const user = await getUser(username, password);
-    if (user && user.password == password) {
-      // create token & return to user
-      const token = jwt.sign(
+    
+  const tempUser = await getUserByUsername(username);
+  const hashedPassword = tempUser.password;
+  const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+
+  if (passwordsMatch) {
+    let user = { id: tempUser.id, username: tempUser.username };
+    const token = jwt.sign(
         { id: user.id, username: user.username },
         process.env.JWT_SECRET
       );
-      res.send({ message: "You're logged in!", token: token });
-    } else {
-      next({
+    res.send({ 
+        user, 
+        message: "you're logged in!",
+        token
+   })} else {
+      res.send({
         name: "IncorrectCredentialsError",
         message: "Username or password is incorrect",
       });
