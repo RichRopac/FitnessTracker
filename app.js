@@ -12,15 +12,15 @@ app.use(morgan('dev'));
 app.use('/api', router);
 client.connect();
 // error handling goes here
-router.use((req, next) => {
+router.use((req, res, next) => {
   if (req.user) {
     console.log('User is set:', req.user);
   }
   next();
 });
-router.use((error, req, res) => {
+router.use((error, req, res, next) => {
   res.send({
-    error: error.error,
+    error: error.message,
     name: error.name,
     message: error.message,
   });
