@@ -18,8 +18,9 @@ router.use((req, next) => {
   }
   next();
 });
-router.use((error, res) => {
+router.use((error, req, res) => {
   res.send({
+    error: error.error,
     name: error.name,
     message: error.message,
   });

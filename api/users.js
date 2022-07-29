@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const { createUser, getUser, getUserByUsername } = require("../db");
 const jwt = require("jsonwebtoken");
-// const { requireUser } = require('./utils');
+const { requireUser } = require('./utilities');
 // May not be necessary? a.t.
 router.use((req, res, next) => {
   console.log("A request is being made to /users");
@@ -90,5 +90,24 @@ router.post("/login", async (req, res, next) => {
   }
 });
 // GET /api/users/me
+router.get("/me", requireUser, async(req, res, next) => {
+
+try {
+    res.send(req.user)  
+    
+} catch (error) {
+    next(error);
+    
+}
+
+})
+
+
+
+
+
+
+
+
 // GET /api/users/:username/routines
 module.exports = router;
