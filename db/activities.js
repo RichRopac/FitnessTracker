@@ -1,4 +1,4 @@
-const client = require('./client');
+const client = require("./client");
 
 // database functions
 async function createActivity({ name, description }) {
@@ -17,7 +17,7 @@ async function createActivity({ name, description }) {
 
     return activity;
   } catch (error) {
-    console.error('Error creating activity!');
+    console.error("Error creating activity!");
   }
 }
 
@@ -31,7 +31,7 @@ async function getAllActivities() {
 
     return rows;
   } catch (error) {
-    console.error('Error getting all activities!');
+    console.error("Error getting all activities!");
     throw error;
   }
 }
@@ -48,7 +48,7 @@ async function getActivityById(id) {
     );
     return activity;
   } catch (error) {
-    console.error('Error getting activity by id!');
+    console.error("Error getting activity by id!");
     throw error;
   }
 }
@@ -67,7 +67,7 @@ async function getActivityByName(name) {
     );
     return activity;
   } catch (error) {
-    console.error('Error getting activity by name!');
+    console.error("Error getting activity by name!");
     throw error;
   }
 }
@@ -75,7 +75,7 @@ async function getActivityByName(name) {
 async function attachActivitiesToRoutines(routines) {
   // no side effects
   const routinesToReturn = [...routines];
-  const binds = routines.map((_, index) => `$${index + 1}`).join(', ');
+  const binds = routines.map((_, index) => `$${index + 1}`).join(", ");
   const routineIds = routines.map((routine) => routine.id);
   if (!routineIds?.length) return [];
 
@@ -104,7 +104,7 @@ async function attachActivitiesToRoutines(routines) {
     //console.log('Finished attaching activities to Routines!');
     return routinesToReturn;
   } catch (error) {
-    console.error('Error attaching activities to routines!');
+    console.error("Error attaching activities to routines!");
     throw error;
   }
 }
@@ -117,7 +117,7 @@ async function updateActivity({ id, ...fields }) {
   // build the set string
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(', ');
+    .join(", ");
 
   // return early if this is called without fields
   if (setString.length === 0) {
@@ -139,7 +139,7 @@ async function updateActivity({ id, ...fields }) {
 
     return activity;
   } catch (error) {
-    console.error('Error updating acitivity!');
+    console.error("Error updating acitivity!");
     throw error;
   }
 }
