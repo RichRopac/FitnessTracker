@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const { createUser, getUser, getUserByUsername } = require("../db");
+const { createUser, getUser, getUserByUsername, getPublicRoutinesByUser } = require("../db");
 const jwt = require("jsonwebtoken");
 const { requireUser } = require('./utilities');
 // May not be necessary? a.t.
@@ -94,20 +94,25 @@ router.get("/me", requireUser, async(req, res, next) => {
 
 try {
     res.send(req.user)  
-    
 } catch (error) {
-    next(error);
-    
+    next(error);   
 }
-
 })
 
-
-
-
-
-
-
-
 // GET /api/users/:username/routines
+router.get("/:username/routines", async(req, res, next) => {
+  console.log("WHAT ARE WE GETTING: ", req.user.id)
+  try {
+    const publicRoutines = await getPublicRoutinesByUser(req.user.username)
+    console.log("THIS IS PUBLIC ROUTINES!!!!!: ", publicRoutines)
+    
+    
+    res.send(publicRoutines)
+    
+  } catch (error) {
+     next(error);
+    
+  }
+})
+
 module.exports = router;
