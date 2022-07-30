@@ -2,8 +2,9 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const { createUser, getUser, getUserByUsername, getPublicRoutinesByUser, getAllRoutinesByUser } = require("../db");
+const { createUser, getUserById, getUserByUsername, getPublicRoutinesByUser, getAllRoutinesByUser } = require("../db");
 const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode")
 const { requireUser } = require('./utilities');
 // May not be necessary? a.t.
 router.use((req, res, next) => {
@@ -13,7 +14,7 @@ router.use((req, res, next) => {
 // POST /api/users/register
 router.post("/register", async (req, res, next) => {
   const { username, password } = req.body;
-  // check password length for being too short
+  // check password length for being too shortclea
   if (password.length < 8) {
     res.send({
       error: "Error with password length..",
@@ -103,11 +104,28 @@ try {
 router.get("/:username/routines", async (req, res, next) => {
     // console.log("WHAT ARE WE GETTING: ", getPublicRoutinesByUser());
     try {
+      const username = req.params.username;
+      let routine = [];
+      //Get the token sent in for logged in user
+      const auth = req.header("Authorization");
+      console.log("THIS IS THE TOKEN SENT IN: ", auth)
       
-     const username = req.params.username;
-      console.log("USERNAME TEST ", { username });
-      const routine = await getPublicRoutinesByUser({ username });
+      //Decode the token to get logged in user.id
+      const decoded = jwt_decode(auth)
+      console.log(" THIS IS DECODED: ", decoded.id)
+      
+      const loggedUser = await getUserById(decoded.id)
+      console.log("THIS IS THE LOGGED IN USER: ",loggedUser.username)
+      console.log("USERNAME TEST ", username);
+      
+      if (username === loggedUser.username){
+        routine = await getAllRoutinesByUser({ username });
+      } else {
+        routine = await getPublicRoutinesByUser({ username });
+      }
+
       res.send(routine);
+
     } catch (error) {
       next(error);
     }
