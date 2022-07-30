@@ -1,5 +1,5 @@
-const client = require('./client');
-const { attachActivitiesToRoutines } = require('./activities');
+const client = require("./client");
+const { attachActivitiesToRoutines } = require("./activities");
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
   try {
@@ -16,7 +16,7 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
     );
     return routine;
   } catch (error) {
-    console.error('Error creating routine!');
+    console.error("Error creating routine!");
     throw error;
   }
 }
@@ -33,7 +33,7 @@ async function getRoutineById(id) {
     );
     return routine;
   } catch (error) {
-    console.error('Error getting routine by id!');
+    console.error("Error getting routine by id!");
     throw error;
   }
 }
@@ -49,7 +49,7 @@ async function getRoutinesWithoutActivities() {
     `);
     return rows;
   } catch (error) {
-    console.error('Error getting routines without activities!');
+    console.error("Error getting routines without activities!");
     throw error;
   }
 }
@@ -66,7 +66,7 @@ async function getAllRoutines() {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all routines!');
+    console.error("Error getting all routines!");
     throw error;
   }
 }
@@ -83,7 +83,7 @@ async function getAllPublicRoutines() {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all public routines!');
+    console.error("Error getting all public routines!");
     throw error;
   }
 }
@@ -102,7 +102,7 @@ async function getAllRoutinesByUser({ username }) {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting all routines by user!');
+    console.error("Error getting all routines by user!");
     throw error;
   }
 }
@@ -120,7 +120,7 @@ async function getPublicRoutinesByUser({ username }) {
 
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting public routines by user!');
+    console.error("Error getting public routines by user!");
     throw error;
   }
 }
@@ -139,7 +139,7 @@ async function getPublicRoutinesByActivity({ id }) {
     );
     return attachActivitiesToRoutines(rows);
   } catch (error) {
-    console.error('Error getting public routines by activity!');
+    console.error("Error getting public routines by activity!");
     throw error;
   }
 }
@@ -152,7 +152,7 @@ async function updateRoutine({ id, ...fields }) {
   // build the set string
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(', ');
+    .join(", ");
 
   // return early if this is called without fields
   if (setString.length === 0) {
@@ -174,7 +174,7 @@ async function updateRoutine({ id, ...fields }) {
 
     return routine;
   } catch (error) {
-    console.error('Error updating routine!');
+    console.error("Error updating routine!");
     throw error;
   }
 }
