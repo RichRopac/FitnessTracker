@@ -8,7 +8,7 @@ const jwt_decode = require("jwt-decode")
 const { requireUser } = require('./utilities');
 // May not be necessary? a.t.
 router.use((req, res, next) => {
-  console.log("A request is being made to /users");
+  // console.log("A request is being made to /users");
   next();
 });
 // POST /api/users/register
@@ -49,8 +49,8 @@ router.post("/register", async (req, res, next) => {
       user,
       token,
     });
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 // POST /api/users/login
@@ -108,15 +108,15 @@ router.get("/:username/routines", async (req, res, next) => {
       let routine = [];
       //Get the token sent in for logged in user
       const auth = req.header("Authorization");
-      console.log("THIS IS THE TOKEN SENT IN: ", auth)
+      // console.log("THIS IS THE TOKEN SENT IN: ", auth)
       
       //Decode the token to get logged in user.id
       const decoded = jwt_decode(auth)
-      console.log(" THIS IS DECODED: ", decoded.id)
+      // console.log(" THIS IS DECODED: ", decoded.id)
       
       const loggedUser = await getUserById(decoded.id)
-      console.log("THIS IS THE LOGGED IN USER: ",loggedUser.username)
-      console.log("USERNAME TEST ", username);
+      // console.log("THIS IS THE LOGGED IN USER: ",loggedUser.username)
+      // console.log("USERNAME TEST ", username);
       
       if (username === loggedUser.username){
         routine = await getAllRoutinesByUser({ username });
