@@ -8,6 +8,8 @@ const {
   getRoutineById,
   destroyRoutine,
   attachActivitiesToRoutines,
+  addActivityToRoutine,
+  getRoutineActivitiesByRoutine,
 } = require("../db");
 
 // GET /api/routines
@@ -152,10 +154,35 @@ router.delete("/:routineId", async (req, res, next) => {
 router.post("/:routineId/activities", async (req, res, next) => {
   try {
     const { routineId, activityId, count, duration } = req.body;
+    const id = req.params.routineId;
     console.log("post body: ", req.body);
     console.log("post params: ", req.params);
-    const attachedActivity = await attachActivitiesToRoutines(routineId);
-    res.send(attachedActivity);
+    const routineActivity = await getRoutineActivitiesByRoutine({ id });
+    if (!routineActivity) {
+      const attachedActivity = await addActivityToRoutine({
+        routineId,
+        activityId,
+        duration,
+        count,
+      });
+      res.send(attachedActivity);
+    }
+    if (routineActivity.activityId === activityId) {
+      res.send({
+        error: "something",
+        message: `Activity ID ${activityId} already exists in Routine ID ${routineId}`,
+        name: "NotFoundError",
+      });
+    }
+    console.log("routineActivity: ", routineActivity);
+    console.log("ACTIVITYID: ", activityId);
+    console.log("RoutienActivityID: ", routineActivity.activityId);
+    // const attachedActivity = await addActivityToRoutine({
+    //   routineId,
+    //   activityId,
+    //   duration,
+    //   count,
+    // });
   } catch (error) {
     next(error);
   }
