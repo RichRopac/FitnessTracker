@@ -44,7 +44,6 @@ async function getRoutinesWithoutActivities() {
     const { rows } = await client.query(`
       SELECT *
       FROM routines
-      )
        ;
     `);
     return rows;
