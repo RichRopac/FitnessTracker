@@ -153,22 +153,23 @@ router.delete("/:routineId", async (req, res, next) => {
 // POST /api/routines/:routineId/activities
 router.post("/:routineId/activities", async (req, res, next) => {
   try {
-    const { routineId, activityId, count, duration } = req.body;
+    const { activityId, count, duration } = req.body;
     const id = req.params.routineId;
+    const { routineId } = req.params;
     console.log("post body: ", req.body);
     console.log("post params: ", req.params);
     const routineActivity = await getRoutineActivitiesByRoutine({ id });
-    if (!routineActivity) {
-      const attachedActivity = await addActivityToRoutine({
-        routineId,
-        activityId,
-        duration,
-        count,
-      });
+
+    const attachedActivity = await addActivityToRoutine({
+      routineId,
+      activityId,
+      duration,
+      count,
+    });
+    if (attachedActivity) {
       res.send(attachedActivity);
-    }
-    if (routineActivity.activityId === activityId) {
-      res.send({
+    } else {
+      next({
         error: "something",
         message: `Activity ID ${activityId} already exists in Routine ID ${routineId}`,
         name: "NotFoundError",
