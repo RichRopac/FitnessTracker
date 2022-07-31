@@ -154,11 +154,9 @@ router.delete("/:routineId", async (req, res, next) => {
 router.post("/:routineId/activities", async (req, res, next) => {
   try {
     const { activityId, count, duration } = req.body;
-    const id = req.params.routineId;
     const { routineId } = req.params;
-    console.log("post body: ", req.body);
-    console.log("post params: ", req.params);
-    const routineActivity = await getRoutineActivitiesByRoutine({ id });
+    // console.log("post body: ", req.body);
+    // console.log("post params: ", req.params);
 
     const attachedActivity = await addActivityToRoutine({
       routineId,
@@ -175,15 +173,9 @@ router.post("/:routineId/activities", async (req, res, next) => {
         name: "NotFoundError",
       });
     }
-    console.log("routineActivity: ", routineActivity);
-    console.log("ACTIVITYID: ", activityId);
-    console.log("RoutienActivityID: ", routineActivity.activityId);
-    // const attachedActivity = await addActivityToRoutine({
-    //   routineId,
-    //   activityId,
-    //   duration,
-    //   count,
-    // });
+    // console.log("routineActivity: ", routineActivity);
+    // console.log("ACTIVITYID: ", activityId);
+    // console.log("RoutienActivityID: ", routineActivity.activityId);
   } catch (error) {
     next(error);
   }
