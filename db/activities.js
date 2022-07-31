@@ -18,6 +18,7 @@ async function createActivity({ name, description }) {
     return activity;
   } catch (error) {
     console.error("Error creating activity!");
+    throw error;
   }
 }
 
@@ -139,7 +140,7 @@ async function updateActivity({ id, ...fields }) {
 
     return activity;
   } catch (error) {
-    console.error("Error updating acitivity!");
+    console.log("Error updating activity!");
     throw error;
   }
 }

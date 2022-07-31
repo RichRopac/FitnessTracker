@@ -13,12 +13,12 @@ const {
 router.get("/:activityId/routines", async (req, res, next) => {
   try {
     const id = req.params.activityId;
-    console.log("activityId: ", id);
+    // console.log("activityId: ", id);
     const activity = await getActivityById(id);
-    console.log("activity: ", activity);
+    // console.log("activity: ", activity);
     const publicRoutine = await getPublicRoutinesByActivity({ id });
-    console.log("activity id:  ", { id });
-    console.log("publicRoutine: ", publicRoutine);
+    // console.log("activity id:  ", { id });
+    // console.log("publicRoutine: ", publicRoutine);
 
     if (!activity) {
       res.send({
@@ -29,7 +29,7 @@ router.get("/:activityId/routines", async (req, res, next) => {
     }
     res.send(publicRoutine);
 
-    console.log("this is request: ", req.params);
+    // console.log("this is request: ", req.params);
   } catch (error) {
     next(error);
   }
