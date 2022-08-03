@@ -6,8 +6,8 @@ const app = express();
 const router = require('./api');
 const client = require('./db/client');
 // Setup your Middleware and API Router here
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 app.use(morgan('dev'));
 app.use('/api', router);
 client.connect();
